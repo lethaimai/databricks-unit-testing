@@ -128,8 +128,8 @@ def test_add_metadata():
         StructField("first_name", StringType(), True),
         StructField("last_name", StringType(), True),
         StructField("age", LongType(), True),
-        StructField("task_id", IntegerType(), True),
-        StructField("ingestion_date", StringType(), True),
+        StructField("task_id", IntegerType(), False),
+        StructField("ingestion_date", StringType(), False),
     ])
 
     expected_data = [
