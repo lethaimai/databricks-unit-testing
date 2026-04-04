@@ -39,7 +39,7 @@ def test_lowercase_all_columns():
             "age": 24
         },
         {
-            "id": "2",
+            "id": 2,
             "first_name": "Sam",
             "last_name": "Smith",
             "age": 41
