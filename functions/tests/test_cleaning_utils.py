@@ -2,6 +2,7 @@
 from databricks.connect import DatabricksSession
 import chispa as cp
 from ..cleaning_utils import *
+from pyspark.sql.types import *
 
 
 def test_lowercase_all_columns():
@@ -121,6 +122,16 @@ def test_add_metadata():
     output_df = add_metadata(test_df, field_dict)
 
     # ASSERT
+    ## create a schema first
+    schema = StructType([
+        StructField("id", LongType(), True),
+        StructField("first_name", StringType(), True),
+        StructField("last_name", StringType(), True),
+        StructField("age", LongType(), True),
+        StructField("task_id", IntegerType(), True),
+        StructField("ingestion_date", StringType(), True),
+    ])
+
     expected_data = [
         {
             "id": 1,
@@ -139,5 +150,6 @@ def test_add_metadata():
             "ingestion_date": "2024-06-01"
         }
     ]
-    expected_df= spark.createDataFrame(expected_data)
-    cp.assert_df_equality(output_df, expected_df, ignore_column_order=False)
+
+    expected_df= spark.createDataFrame(expected_data, schema=schema)
+    cp.assert_df_equality(output_df, expected_df, ignore_column_order=True)
