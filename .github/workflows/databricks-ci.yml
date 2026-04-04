@@ -1,7 +1,7 @@
 # This workflow will run unit tests on Databricks using GitHub Actions.
 # To use this workflow, you need to set up the following secrets in your GitHub repository:
 # - DATABRICKS_HOST: The URL of your Databricks workspace (e.g., https://<databricks-instance>.cloud.databricks.com)
-# - DATABRICKS_TOKEN: A Databricks personal access token with appropriate permissions to run Databricks Connect.
+# - DATABRICKS_TOKEN: A Databricks personal access token with appropriate permissions to run Databricks Connect. 
 
 # name of the workflow
 name: Databricks CI
@@ -14,6 +14,7 @@ jobs:
     runs-on: ubuntu-latest # specify the operating system for the job
     # define the steps to run in this job
     steps:
+      # use the actions/checkout action to check out the repository
       - uses: actions/checkout@v2
       - uses: actions/setup-python@v4
         with:
