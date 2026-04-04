@@ -12,21 +12,25 @@ jobs:
   # define a job named "run-databricks-ci"
   run-databricks-ci:
     runs-on: ubuntu-latest # specify the operating system for the job
+    permissions:
+      contents: read
+      checks: write
+      pull-requests: write
     # define the steps to run in this job
     steps:
+      # use the actions/checkout action to check out the repository
       - uses: actions/checkout@v2
       - uses: actions/setup-python@v4
         with:
           python-version: "3.11"
       - run: pip install -r requirements.txt
-      - run: |
-          echo "[first_access_databrick_1]
-          host=${{ secrets.DATABRICKS_HOST }}
-          token=${{ secrets.DATABRICKS_TOKEN }}
-          serverless_compute_id=auto" > ~/.databrickscfg
-      - run: DATABRICKS_CONFIG_PROFILE=first_access_databrick_1 pytest functions --junitxml=unit-testresults.xml
+      - run: pytest functions --junitxml=unit-testresults.xml
+        env:
+          DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
+          DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
+          DATABRICKS_SERVERLESS_COMPUTE_ID: auto
       - name: Publish Unit Test Results
-        uses: EnricoMi/publish-unit-test-result-action@v1
+        uses: EnricoMi/publish-unit-test-result-action@v2
         if: always()
         with:
           files: unit-testresults.xml
