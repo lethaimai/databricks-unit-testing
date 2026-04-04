@@ -19,12 +19,12 @@ jobs:
     # define the steps to run in this job
     steps:
       # use the actions/checkout action to check out the repository
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v2 # pre-buil action from github, downloads the code in the repository to the Linux machine
       - uses: actions/setup-python@v4
         with:
           python-version: "3.11"
       - run: pip install -r requirements.txt
-      - run: pytest functions --junitxml=unit-testresults.xml
+      - run: pytest functions --junitxml=unit-testresults.xml # --junitxml saves results to an XML file for the publish step
         env:
           DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
           DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
