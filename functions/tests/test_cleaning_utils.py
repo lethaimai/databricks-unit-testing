@@ -135,7 +135,7 @@ def test_add_metadata():
             "first_name": "Sam",
             "last_name": "Smith",
             "age": 41,
-            "source_system": "test_system",
+            "task_id": 1,
             "ingestion_date": "2024-06-01"
         }
     ]
