@@ -119,10 +119,13 @@ def test_add_metadata():
     field_dict = {"task_id": 1, "ingestion_date": "2024-06-01"}
 
     # ACT
+    # after applying the fct add_metadata, the value of
+    # id will be the IntegerType
     output_df = add_metadata(test_df, field_dict)
 
     # ASSERT
     ## create a schema first
+    ## without creating this schema and only creting the expected_df, the task_id  columns will be created with LongType, as Spark by default creates IntegerType columns as LongType, but in the output_df, the task_id column is IntegerType, so we need to create the expected_df with the same schema to avoid assertion error due to different data types-
     schema = StructType([
         StructField("id", LongType(), True),
         StructField("first_name", StringType(), True),
